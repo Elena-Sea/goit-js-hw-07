@@ -3,8 +3,9 @@ import { galleryItems } from './gallery-items.js';
 
 console.log(galleryItems);
 
-const gallery = document.querySelector('.gallery');
-gallery.innerHTML = createGalleryMarkup(galleryItems);
+const galleryContainer = document.querySelector('.gallery');
+const galleryMarkup = createGalleryMarkup(galleryItems);
+galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
 
 function createGalleryMarkup(galleryItems) {
     return galleryItems.map(({ preview, original, description }) => {
@@ -21,6 +22,17 @@ function createGalleryMarkup(galleryItems) {
     </div>
     `
     }).join('');
+}
+
+galleryContainer.addEventListener("click", onGalleryContainerClick);
+
+function onGalleryContainerClick(e) {
+
+    if (!e.target.classList.contains('gallery__image')) {
+        return;
+    }
+    console.log(234);
+
 }
 
 
