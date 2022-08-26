@@ -3,15 +3,15 @@ import { galleryItems } from './gallery-items.js';
 
 console.log(galleryItems);
 
+
 const galleryContainer = document.querySelector('.gallery');
-const galleryMarkup = createGalleryMarkup(galleryItems);
 
-galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
+const galleryMarkup = creatGalleryMarkup(galleryItems);
+galleryContainer.insertAdjacentHTML('beforeend',galleryMarkup);
 
-function createGalleryMarkup(galleryItems) {
+function creatGalleryMarkup(galleryItems) {
     return galleryItems.map(({ preview, original, description }) => {
-        return `
-     <div class="gallery__item">
+        return `<div class="gallery__item">
   <a class="gallery__link" href="${original}">
     <img
       class="gallery__image"
@@ -20,32 +20,20 @@ function createGalleryMarkup(galleryItems) {
       alt="${description}"
     />
   </a>
-</div>   
-    `
-    }).join('');
-}
-galleryContainer.addEventListener("click", onGalleryContainerClick);
+</div>`
+     }).join('');
+};
 
-function onGalleryContainerClick(e) {
-    // e.preventDefault();
-    if (!e.target.classList.contains('gallery__image')) {
-        return;
-    }
-    loadLargeImage(e.target.dataset.sourse) ;
-}
+galleryContainer.addEventListener('click', onGalleryClick);
 
-function loadLargeImage(largeImageSrc) {
-    const largeImageModal = basicLightbox.create(`<img src="${largeImageSrc}" alt="${description}" width="1200" min-height="600"/>`,
-        {
-            onClose: () => { window.removeEventListener("keydown", onKeyboardEscape)}
-        });
-    largeImageModal.show();
-}
+function onGalleryClick(e) {
+    e.preventDefault();
+    openModalWithImage(e.target.dataset.source);
+};
 
-// function onKeyboardEscape(e) {
-//     switch (e?.code) {
-//         case "Escape":
-//             closeModal();
-//             return;
-//     }
-// }
+
+function openModalWithImage(content) {
+    const instance = basicLightbox.create(`<img src="${content}" alt="hurra"/>`);
+
+    instance.show();
+};
